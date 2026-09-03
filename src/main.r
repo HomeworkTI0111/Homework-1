@@ -10,10 +10,18 @@ data_group$dteday[300]
 data_group$total_user <- data_group$casual + data_group$registered
 colSums(is.na(data_group))
 
+amostra <- data_group[1:10,]
+
 #media (sem na.rm pois ja nao tem dados ausentes, idem pros proximos)
+colMeans(amostra [, 6:9])
 colMeans(data_group[, 6:9])
 
 #mediana (existe uma biblioteca com um colMedians())
+median(amostra$temp)
+median(amostra$casual)
+median(amostra$registered)
+median(amostra$total_user)
+
 median(data_group$temp)
 median(data_group$casual)
 median(data_group$registered)
@@ -29,8 +37,9 @@ moda <- function(d){
     cat("Frequencia:", freq_moda, "\n")
 }
 
-moda(data_group$weathersit
-moda(data_group$temp) 
-moda(data_group$casual)
-moda(data_group$registered)
-moda(data_group$total_user)
+moda(amostra$season)
+moda(amostra$weathersit)
+
+moda(data_group$season) 
+moda(data_group$weathersit)
+

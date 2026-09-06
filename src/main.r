@@ -30,12 +30,12 @@ median(data_group$total_user)
 
 #criando e usando moda
 moda <- function(d){
-    freq <- table(d)
-    valor_moda <- names(freq)[freq == max(freq)]
-    freq_moda <- max(freq)
-
-    cat("Moda:", valor_moda, "\n")
-    cat("Frequencia:", freq_moda, "\n")
+  freq <- table(d)
+  valor_moda <- names(freq)[freq == max(freq)]
+  freq_moda <- max(freq)
+  
+  cat("Moda:", valor_moda, "\n")
+  cat("Frequencia:", freq_moda, "\n")
 }
 
 moda(data_groupinho$season)
@@ -54,3 +54,22 @@ quantile(data_group$temp, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$casual, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$registered, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$total_user, probs = c(0.25, 0.5, 0.75))
+
+# 2.5
+Q1_amostra<-quantile(data_groupinho$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user
+data_groupinho$low_usage<-ifelse(data_groupinho$total_user < Q1_amostra, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+baixa_util<-sum(data_groupinho$low_usage) #contagem/soma dos valores que estão abaixo de Q1
+prop<-mean(data_groupinho$low_usage)
+
+Q1_amostra
+baixa_util
+prop
+
+Q1<-quantile(data_group$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user
+data_group$low_usage<-ifelse(data_group$total_user < Q1, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+baixa_utilizacao<-sum(data_group$low_usage) #contagem/soma dos valores que estão abaixo de Q1
+proporcao<-mean(data_group$low_usage) #proporção em relação ao todo (média)
+
+Q1
+baixa_utilizacao
+proporcao

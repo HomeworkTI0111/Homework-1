@@ -73,3 +73,30 @@ proporcao<-mean(data_group$low_usage) #proporção em relação ao todo (média)
 Q1
 baixa_utilizacao
 proporcao
+
+#3.1 
+
+aggregate(total_user~season,data=data_group,FUN=mean) #calculo da media
+aggregate(total_user~season,data=data_group,FUN=median) #calculo da mediana
+aggregate(total_user~season,data=data_group,FUN=sd) #calculo do desvio padrao
+aggregate(low_usage~season,data=data_group,FUN=sum) #calculo do valor absoluto de low usage
+aggregate(low_usage~season,data=data_group,FUN=mean) #calculo do valor relativo de low usage
+boxplot(total_user~season,data=data_group) #construção do box plot
+
+#3.2
+aggregate(total_user~weathersit,data=data_group,FUN=mean)  #calculo da media
+aggregate(total_user~weathersit,data=data_group,FUN=sd)  #calculo do desvio padrao
+aggregate(low_usage~weathersit,data=data_group,FUN=sum) # valor absoluto de low usage
+aggregate(low_usage~weathersit,data=data_group,FUN=mean) # valor relativo de low usage
+#Valores observados a partir das funcoes acima e que sao necessarios para construir o grafico 
+Media1 <- 4172.522
+Media2 <- 3449.971
+Media3 <- 1757.571
+#Construcao do grafico de barras
+barplot(c(Media1,Media2,Media3),names.arg=c("1","2","3"),xlab="Condicoes metereologicas",ylab="Media de total user",main="Media de total user por condicao metereologica")
+
+#3.3
+plot(data_group$total_user,data_group$temp) # construcao do grafico de dispersao
+cor(data_group$total_user,data_group$temp,method ="pearson") # calculo do coeficiente de correlacao por meio do metodo de pearson
+cor(data_group$total_user,data_group$temp,method ="kendall") # calculo do coeficiente de correlacao por meio do metodo de kendall
+cor(data_group$total_user,data_group$temp,method ="spearman") # calculo do coeficiente de correlacao por meio do metodo de spearman

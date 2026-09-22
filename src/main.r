@@ -96,7 +96,7 @@ Media3 <- 1757.571
 barplot(c(Media1,Media2,Media3),names.arg=c("1","2","3"),xlab="Condicoes metereologicas",ylab="Media de total user",main="Media de total user por condicao metereologica")
 
 #3.3
-plot(data_group$total_user,data_group$temp) # construcao do grafico de dispersao
+plot(data_group$total_user,data_group$temp,xlab="total user",ylab="temperatura") # construcao do grafico de dispersao
 cor(data_group$total_user,data_group$temp,method ="pearson") # calculo do coeficiente de correlacao por meio do metodo de pearson
 cor(data_group$total_user,data_group$temp,method ="kendall") # calculo do coeficiente de correlacao por meio do metodo de kendall
 cor(data_group$total_user,data_group$temp,method ="spearman") # calculo do coeficiente de correlacao por meio do metodo de spearman

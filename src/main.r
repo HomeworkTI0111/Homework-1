@@ -81,7 +81,41 @@ aggregate(total_user~season,data=data_group,FUN=median) #calculo da mediana
 aggregate(total_user~season,data=data_group,FUN=sd) #calculo do desvio padrao
 aggregate(low_usage~season,data=data_group,FUN=sum) #calculo do valor absoluto de low usage
 aggregate(low_usage~season,data=data_group,FUN=mean) #calculo do valor relativo de low usage
-boxplot(total_user~season,data=data_group) #construção do box plot
+boxplot(total_user~season,data=data_group,col="skyblue") #construção do box plot
+data_groupinho_season1 <- data_groupinho # Como groupinho tem 10 casos da estacao 1 ent serve para ser analisado
+data_groupinho_season2 <- head(data_group[data_group$season == 2, ], 10)
+data_groupinho_season3 <- head(data_group[data_group$season == 3, ], 10)
+data_groupinho_season4 <- head(data_group[data_group$season == 4, ], 10)# criacao das 10 primeiras amostras de cada estacao
+aggregate(total_user~season,data=data_groupinho_season1,FUN=mean) #calculo da media da amostra de season 1
+aggregate(total_user~season,data=data_groupinho_season1,FUN=median) #calculo da mediana da amostra de season1 
+aggregate(total_user~season,data=data_groupinho_season1,FUN=sd) #calculo do desvio padrao da amostra de season 1 
+aggregate(total_user~season,data=data_groupinho_season2,FUN=mean) #calculo da media da amostra de season 2
+aggregate(total_user~season,data=data_groupinho_season2,FUN=median) #calculo da mediana da amostra de season 2
+aggregate(total_user~season,data=data_groupinho_season2,FUN=sd) #calculo do desvio padrao da amostra de season 2 
+aggregate(total_user~season,data=data_groupinho_season3,FUN=mean) #calculo da media da amostra de season 3
+aggregate(total_user~season,data=data_groupinho_season3,FUN=median) #calculo da mediana da amostra de season 3
+aggregate(total_user~season,data=data_groupinho_season3,FUN=sd) #calculo do desvio padrao da amostra de season 3
+aggregate(total_user~season,data=data_groupinho_season4,FUN=mean) #calculo da media da amostra de season 4
+aggregate(total_user~season,data=data_groupinho_season4,FUN=median) #calculo da mediana da amostra de season 4
+aggregate(total_user~season,data=data_groupinho_season4,FUN=sd) #calculo do desvio padrao da amostra de season 4
+Q1_amostra_season1<-quantile(data_groupinho_season1$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de season 1 
+data_groupinho_season1$low_usage<-ifelse(data_groupinho_season1$total_user < Q1_amostra_season1, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+Q1_amostra_season2<-quantile(data_groupinho_season2$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de season 2
+data_groupinho_season2$low_usage<-ifelse(data_groupinho_season2$total_user < Q1_amostra_season2, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+Q1_amostra_season3<-quantile(data_groupinho_season3$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de season 3
+data_groupinho_season3$low_usage<-ifelse(data_groupinho_season3$total_user < Q1_amostra_season2, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+Q1_amostra_season4<-quantile(data_groupinho_season4$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de season 4
+data_groupinho_season4$low_usage<-ifelse(data_groupinho_season4$total_user < Q1_amostra_season4, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+#essas etapas foram feitas para redefinir low_usage de forma adequada em cada uma das amostras
+aggregate(low_usage~season,data=data_groupinho_season1,FUN=sum) #calculo do valor absoluto de low usage na amostra de season 1
+aggregate(low_usage~season,data=data_groupinho_season1,FUN=mean) #calculo do valor relativo de low usage na amostra de season 1
+aggregate(low_usage~season,data=data_groupinho_season2,FUN=sum) #calculo do valor absoluto de low usage na amostra de season 2
+aggregate(low_usage~season,data=data_groupinho_season2,FUN=mean) #calculo do valor relativo de low usage na amostra de season 2
+aggregate(low_usage~season,data=data_groupinho_season3,FUN=sum) #calculo do valor absoluto de low usage na amostra de season 3
+aggregate(low_usage~season,data=data_groupinho_season3,FUN=mean) #calculo do valor relativo de low usage na amostra de season 3
+aggregate(low_usage~season,data=data_groupinho_season4,FUN=sum) #calculo do valor absoluto de low usage na amostra de season 4
+aggregate(low_usage~season,data=data_groupinho_season4,FUN=mean) #calculo do valor relativo de low usage na amostra de season 4
+boxplot(data_groupinho_season1$total_user,data_groupinho_season2$total_user,data_groupinho_season3$total_user,data_groupinho_season4$total_user,names=c("1","2","3","4"),col="skyblue",xlab="season",ylab="total user") #construção do box plot das amostraas
 
 #3.2
 aggregate(total_user~weathersit,data=data_group,FUN=mean)  #calculo da media
@@ -93,10 +127,43 @@ Media1 <- 4172.522
 Media2 <- 3449.971
 Media3 <- 1757.571
 #Construcao do grafico de barras
-barplot(c(Media1,Media2,Media3),names.arg=c("1","2","3"),xlab="Condicoes metereologicas",ylab="Media de total user",main="Media de total user por condicao metereologica")
-
+barplot(c(Media1,Media2,Media3),names.arg=c("1","2","3"),col=c("skyblue","orange","grey"),xlab="Condicoes meteorologicas",ylab="Media de total user",main="Media de total user por condicao meteorologica")
+#Criacao dos grupos de amostra para cada condicao meteorologica
+data_groupinho_weathersit1 <- head(data_group[data_group$weathersit == 1, ], 10)
+data_groupinho_weathersit2 <- head(data_group[data_group$weathersit == 2, ], 10)
+data_groupinho_weathersit3 <- head(data_group[data_group$weathersit == 3, ], 10)
+aggregate(total_user~weathersit,data=data_groupinho_weathersit1,FUN=mean)  #calculo da media da amostra de weathersit 1
+aggregate(total_user~weathersit,data=data_groupinho_weathersit1,FUN=sd)  #calculo do desvio padrao da amostra de weathersit 1
+aggregate(total_user~weathersit,data=data_groupinho_weathersit2,FUN=mean)  #calculo da media da amostra de weathersit 2
+aggregate(total_user~weathersit,data=data_groupinho_weathersit2,FUN=sd)  #calculo do desvio padrao da amostra de weathersit 2
+aggregate(total_user~weathersit,data=data_groupinho_weathersit3,FUN=mean)  #calculo da media da amostra de weathersit 3
+aggregate(total_user~weathersit,data=data_groupinho_weathersit3,FUN=sd)  #calculo do desvio padrao da amostra de weathersit 3
+#Modificacao de low usage em cada um deles
+Q1_amostra_weathersit1<-quantile(data_groupinho_weathersit1$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de weathersit 1 
+data_groupinho_weathersit1$low_usage<-ifelse(data_groupinho_weathersit1$total_user < Q1_amostra_weathersit1, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+Q1_amostra_weathersit2<-quantile(data_groupinho_weathersit2$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de weathersit 2
+data_groupinho_weathersit2$low_usage<-ifelse(data_groupinho_weathersit2$total_user < Q1_amostra_weathersit2, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+Q1_amostra_weathersit3<-quantile(data_groupinho_weathersit3$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user na amostra de weathersit 3
+data_groupinho_weathersit3$low_usage<-ifelse(data_groupinho_weathersit3$total_user < Q1_amostra_weathersit3, 1, 0) #Valores que estão abaixo de Q1 recebem 1, se não, recebem 0
+# Calculos com low usage
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit1,FUN=sum) # valor absoluto de low usage na amostra de weathersit 1
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit1,FUN=mean) # valor relativo de low usage na amostra de weathersit 1
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit2,FUN=sum) # valor absoluto de low usage na amostra de weathersit 2
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit2,FUN=mean) # valor relativo de low usage na amostra de weathersit 2
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit3,FUN=sum) # valor absoluto de low usage na amostra de weathersit 3
+aggregate(low_usage~weathersit,data=data_groupinho_weathersit3,FUN=mean) # valor relativo de low usage na amostra de weathersit 3
+#Valores necessarios para construir o grafico 
+Media_groupinho1 <- mean(data_groupinho_weathersit1$total_user)
+Media_groupinho2 <- mean(data_groupinho_weathersit2$total_user)
+Media_groupinho3 <- mean(data_groupinho_weathersit3$total_user)
+#Grafico
+barplot(c(Media_groupinho1,Media_groupinho2,Media_groupinho3),names.arg=c("1","2","3"),col=c("skyblue","orange","grey"),xlab="Condicoes meteorologicas",ylab="Media de total user",main="Media de total user por condicao meteorologica")
 #3.3
 plot(data_group$total_user,data_group$temp,xlab="total user",ylab="temperatura") # construcao do grafico de dispersao
 cor(data_group$total_user,data_group$temp,method ="pearson") # calculo do coeficiente de correlacao por meio do metodo de pearson
 cor(data_group$total_user,data_group$temp,method ="kendall") # calculo do coeficiente de correlacao por meio do metodo de kendall
 cor(data_group$total_user,data_group$temp,method ="spearman") # calculo do coeficiente de correlacao por meio do metodo de spearman
+plot(data_groupinho$total_user,data_groupinho$temp,xlab="total user",ylab="temperatura") # construcao do grafico de dispersao da amostra da tempemperatura que é apenas o groupinho
+cor(data_groupinho$total_user,data_groupinho$temp,method ="pearson") # calculo do coeficiente de correlacao da amostra por meio do metodo de pearson
+cor(data_groupinho$total_user,data_groupinho$temp,method ="kendall") # calculo do coeficiente de correlacao da amostra por meio do metodo de kendall
+cor(data_groupinho$total_user,data_groupinho$temp,method ="spearman") # calculo do coeficiente de correlacao da amostra por meio do metodo de spearman

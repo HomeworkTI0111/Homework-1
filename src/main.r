@@ -73,3 +73,31 @@ proporcao<-mean(data_group$low_usage) #proporção em relação ao todo (média)
 Q1
 baixa_utilizacao
 proporcao
+
+
+
+
+# 4.1
+datas <- as.Date(data_group$dteday)
+dia_inicio <- as.numeric(format(datas[1], "%j"))
+total_user_ts <- ts(data_group$total_user, start = c(2011, dia_inicio), freq = 365)
+
+plot(total_user_ts,
+	xaxt = "n",
+	lwd = 2,
+	main = "Serie Temporal - Total de Usuarios",
+	xlab = "Ano", 
+	ylab = "Total de Usuarios")
+marcadores_datas <- seq(from = datas[1], to = max(datas), by = "1 month")
+rotulos <- format(marcadores_datas, "%b/%Y")
+posicoes_rotulos <- as.numeric(format(marcadores_datas, "%Y")) + (as.numeric(format(marcadores_datas, "%j")) - 1) / 365
+axis(side = 1, at = posicoes_rotulos, labels = rotulos)
+
+
+# 4.3
+quartil_1_group <- quantile(data_group$total_user, probs = 0.25)
+plot(data_group$total_user, data_group$temp, 
+	xlab = "Usuarios totais", 
+	ylab = "Temperatura (C)")
+abline(v = quartil_1_group, col = "red", lty = 2)
+abline(h = mean(data_group$temp), col = "blue", lty = 2)

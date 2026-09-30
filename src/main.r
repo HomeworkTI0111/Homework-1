@@ -172,27 +172,66 @@ cor(data_groupinho$total_user,data_groupinho$temp,method ="spearman") # calculo 
 
 
 # 4.1
+#Criacao da variavel de serie temporal
 datas <- as.Date(data_group$dteday)
 dia_inicio <- as.numeric(format(datas[1], "%j"))
 total_user_ts <- ts(data_group$total_user, start = c(2011, dia_inicio), freq = 365)
 
+#Plotagem do grafico da serie temporal
 plot(total_user_ts,
 	xaxt = "n",
 	lwd = 2,
 	main = "Serie Temporal - Total de Usuarios",
 	xlab = "Ano", 
 	ylab = "Total de Usuarios")
+
+#Personalizacao do eixo x do grafico
 marcadores_datas <- seq(from = datas[1], to = max(datas), by = "1 month")
-rotulos <- format(marcadores_datas, "%b/%Y")
+rotulos <- format(marcadores_datas, "%b/%Y") #formato %b %Y --> Ex.: fev 2011
 posicoes_rotulos <- as.numeric(format(marcadores_datas, "%Y")) + (as.numeric(format(marcadores_datas, "%j")) - 1) / 365
 axis(side = 1, at = posicoes_rotulos, labels = rotulos)
 
 
+#4.2
+user_inverno <- data_group$total_user[data_group$season==1]
+user_primavera <- data_group$total_user[data_group$season==2]
+user_verao <- data_group$total_user[data_group$season==3]
+user_outono <- data_group$total_user[data_group$season==4]
+
+#Desabilitacao da notacao cientifica para melhor visualizacao dos numeros do eixo y
+options(scipen = 999) 
+
+#Plotagem do grafico de barras das estacoes
+barplot(c(sum(user_inverno), sum(user_primavera), sum(user_verao), sum(user_outono)),
+	names.arg = c("inverno (1)", "primavera (2)", "verao (3)", "outono (4)"), 
+	col=c("skyblue", "pink", "orange", "brown"), 
+	xlab="season", 
+	ylab="total user", 
+	main="total user x season")
+
+#Divisao de total_user entre as condicoes meteorologicas
+user_weather1 <- data_group$total_user[data_group$weathersit==1]
+user_weather2 <- data_group$total_user[data_group$weathersit==2]
+user_weather3 <- data_group$total_user[data_group$weathersit==3]
+
+#Plotagem do grafico de barras das condicoes meteorologicas
+barplot(c(sum(user_weather1), sum(user_weather2), sum(user_weather3)),
+    names.arg = c("1", "2", "3"), 
+    col=c("skyblue", "orange", "grey"), 
+    xlab="weathersit", 
+     ylab="total user", 
+     main="total user x weathersit")
+
+
 # 4.3
-quartil_1_group <- quantile(data_group$total_user, probs = 0.25)
+#Criacao da variavel que contem Q1
+quartil1_group <- quantile(data_group$total_user, probs = 0.25)
+
+#Plotagem do grafico igual 3.3
 plot(data_group$total_user, data_group$temp, 
 	xlab = "Usuarios totais", 
 	ylab = "Temperatura (C)")
-abline(v = quartil_1_group, col = "red", lty = 2)
-abline(h = mean(data_group$temp), col = "blue", lty = 2)
 
+#Adicao das linhas de visualizacao
+abline(v = quartil1_group, col = "red", lty = 2)
+abline(h = mean(data_group$temp), col = "blue", lty = 2)

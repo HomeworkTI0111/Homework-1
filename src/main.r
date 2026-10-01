@@ -224,7 +224,7 @@ cor(data_groupinho$total_user,data_groupinho$temp,method ="spearman") # calculo 
 # 4.1
 #Criacao da variavel de serie temporal
 datas <- as.Date(data_group$dteday)
-dia_inicio <- as.numeric(format(datas[1], "%j"))
+dia_inicio <- data_group$instant[1]
 total_user_ts <- ts(data_group$total_user, start = c(2011, dia_inicio), freq = 365)
 
 #Plotagem do grafico da serie temporal

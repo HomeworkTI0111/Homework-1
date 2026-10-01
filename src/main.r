@@ -1,3 +1,4 @@
+#1
 data_orig <- read.csv("HW1_bike_sharing.csv")
 matriculas <- c(582204, 590055, 582887, 582929)
 M <- max(matriculas)
@@ -7,9 +8,11 @@ data_group <- data_orig[r:(r + 299), ]
 data_group$dteday[1]
 data_group$dteday[300]
 
+#2.1
 data_group$total_user <- data_group$casual + data_group$registered
 colSums(is.na(data_group))
 
+#2.2
 data_groupinho <- data_group[1:10, ]
 
 #media (sem na.rm pois ja nao tem dados ausentes, idem pros proximos)

@@ -33,12 +33,11 @@ A amostragem de dados do grupo (data_group) foi filtrada a partir do maior valor
 
 ## 📂 Estrutura do Repositório
 
-`
-├── HW1_bike_sharing.csv         # Dataset original de entrada
-├── main.r                       # Script com todos os códigos em R desenvolvidos
-├── TI0111_HW1_assignment.pdf    # Relatório final em PDF
-└── README.md                    # Documentação do repositório
-`
+* HW1_bike_sharing.csv         # Dataset original de entrada
+* main.r                       # Script com todos os códigos em R desenvolvidos
+* TI0111_HW1_assignment.pdf    # Relatório final em PDF
+* README.md                    # Documentação do repositório
+
 
 ---
 

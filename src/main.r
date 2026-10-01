@@ -44,16 +44,63 @@ moda(data_groupinho$weathersit)
 moda(data_group$season)
 moda(data_group$weathersit)
 
+#2.3
 #quartil Q1, Q2 e Q3
 quantile(data_groupinho$temp, probs = c(0.25, 0.5, 0.75))
 quantile(data_groupinho$casual, probs = c(0.25, 0.5, 0.75))
 quantile(data_groupinho$registered, probs = c(0.25, 0.5, 0.75))
-quantile(data_groupinho$total_user, probs = c(0.25, 0.5, 0.75))
+quantile(data_groupinho$total_user, probs = c(0.25, 0.5, 0.75), type = 2)
 
 quantile(data_group$temp, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$casual, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$registered, probs = c(0.25, 0.5, 0.75))
 quantile(data_group$total_user, probs = c(0.25, 0.5, 0.75))
+
+#========================
+#2.4
+
+#intervalo interquartil
+quartis_groupinho <- quantile(data_groupinho$total_user, probs = c(0.25, 0.5, 0.75))
+Q1 <- quartis_groupinho[1]
+Q3 <- quartis_groupinho[3]
+IIQ <- unname(Q3 - Q1)
+IIQ
+# alternativamente:
+IQR(data_groupinho$total_user)
+
+library(ggplot2)
+
+ggplot(data = data_groupinho) +
+  geom_histogram(mapping = aes(x = total_user), binwidth = NULL, bins = 30, fill = "steelblue", color = "white") +
+  labs(
+    title = "Histograma do Valor de Clientes Totais",
+    x = "Valor de Clientes Totais",
+    y = "Frequencia"
+  ) 
+
+
+ggplot(data = data_groupinho) +
+  geom_boxplot(mapping = aes(y = total_user),fill = "steelblue", color = "black") +
+  labs(
+    title = "Boxplot do Valor de Clientes Totais",
+    y = "Valor de Clientes Totais"
+  )
+
+ggplot(data = data_group) +
+  geom_histogram(mapping = aes(x = total_user), binwidth = NULL, bins = 30, fill = "steelblue", color = "white") +
+  labs(
+    title = "Histograma do Valor de Clientes Totais",
+    x = "Valor de Clientes Totais",
+    y = "Frequencia"
+  ) 
+
+
+ggplot(data = data_group) +
+  geom_boxplot(mapping = aes(y = total_user),fill = "steelblue", color = "black") +
+  labs(
+    title = "Boxplot do Valor de Clientes Totais",
+    y = "Valor de Clientes Totais"
+  )
 
 # 2.5
 Q1_amostra<-quantile(data_groupinho$total_user, 0.25) # cálculo do primeiro quartil (Q1) de total_user
